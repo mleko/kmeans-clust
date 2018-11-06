@@ -1,0 +1,17 @@
+sudo: false
+language: node_js
+node_js:
+  - "node"
+  - "10"
+  - "9"
+  - "8"
+  - "7"
+  - "6"
+  - "5"
+git:
+  depth: 7
+
+script:
+  - npm run -q compile
+  - npm run -q lint
+  - npm test

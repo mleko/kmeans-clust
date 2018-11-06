@@ -1,0 +1,61 @@
+{
+  "name": "kmeans-clust",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "k-means clustering in TypeScript",
+  "keywords": [
+    "kmeans",
+    "k-means",
+    "cluster",
+    "clustering",
+    "typescript"
+  ],
+  "scripts": {
+    "compile": "tsc -d",
+    "prepublishOnly": "npm run lint && tsc -d",
+    "lint": "tslint -t verbose index.ts src/* src/**/*",
+    "test": "mocha tests/*.test.ts tests/**/*.test.ts --opts ./mocha.opts",
+    "test:coverage": "nyc mocha tests/*.test.ts tests/**/*.test.ts --opts ./mocha.opts",
+    "test:coverage:html": "nyc --reporter=html mocha tests/*.test.ts tests/**/*.test.ts --opts ./mocha.opts && open .coverage/index.html"
+  },
+  "author": "Daniel Król",
+  "license": "MIT",
+  "dependencies": {
+    "typescript-object-utils": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.0.0",
+    "@types/node": "^10.0.0",
+    "mocha": "^5.1.0",
+    "nyc": "^13.0.0",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.8.0",
+    "typescript": "^3.0.0"
+  },
+  "files": [
+    "src/",
+    "dist/"
+  ],
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "include": [
+      "src/**"
+    ],
+    "reporter": [
+      "text-summary"
+    ],
+    "report-dir": "./.coverage",
+    "all": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mleko/kmeans-clust.git"
+  }
+}
