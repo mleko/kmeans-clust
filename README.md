@@ -22,4 +22,9 @@ kmeans(points, 2)
  //=>   { centroid: [ 9.5 ], points: [ [Array], [Array] ], error: 1 } ]
 ```
 
+#### To run graphic example execute command
+```
+$ npm run example
+```
+
 ### [License (MIT)](LICENSE.md)
