@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>k-means example</title>
+    <style>
+        html body {
+            margin: 0;
+            height: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex;">
+      <div style="height: 100%; flex-basis: 200px;">
+        <form>
+            <label>Cluster count <input id="clusters" value="3" type="number" min="3" max="7"/></label><br/>
+            <label>Point count <input id="points" value="1000" type="number" min="10" max="10000"/></label>
+            <button type="button" id="resetData">New point set</button><br/>
+            <button type="button" id="recluster">Cluster again</button>
+        </form>
+      </div>
+      <div style="height: 100%;" id="graph"></div>
+    </div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
