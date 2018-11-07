@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import {Delaunay} from "d3-delaunay";
 import {kmeans} from "../";
 
 const colors = ["blue", "green", "yellow", "cyan", "magenta", "brown", "grey"];
@@ -10,6 +11,9 @@ window.onload = () => {
     
     document.getElementById("points").onchange = loadForm;
     document.getElementById("clusters").onchange = loadForm;
+
+    document.getElementById("clusterSeeds").onchange = render;
+    document.getElementById("voronoi").onchange = render;
 
     loadForm();
 };
@@ -27,14 +31,17 @@ const seed = () => {
     const {pointCount, clusterCount} = data;
     const {points, seeds} = seedPoints(pointCount, clusterCount, width, height);
 
-    data = Object.assign(data, {points, pointCount, clusterCount, width, height});
+    data = Object.assign(data, {points, pointCount, clusterCount, width, height, seeds});
     clusterize();
 };
 
 const clusterize = () => {
-    const {points, clusterCount, width, height} = data;
+    data.clusters = kmeans(data.points, data.clusterCount);
+    render();
+};
 
-    const clusters = kmeans(points, clusterCount);
+const render = () => {
+    const {clusters, width, height, seeds} = data;
 
     document.getElementById("graph").innerHTML = null;
     const svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);
@@ -46,6 +53,17 @@ const clusterize = () => {
         });
         svg.append("rect").attr("x", c.centroid[0]).attr("y", c.centroid[1]).attr("height", 10).attr("width", 10).attr("stroke", "black").attr("fill", color);
     });
+
+    if(document.getElementById("voronoi")["checked"]){
+        const delaunay = Delaunay.from(clusters.map((c) => c.centroid));
+        const voronoi = delaunay.voronoi([0, 0, width, height]);
+        svg.append("path").attr("d", voronoi.render()).attr("stroke", "black");
+    }
+    if(document.getElementById("clusterSeeds")["checked"]){
+        seeds.map((p) => {
+            svg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("r", 5).attr("stroke", "red").attr("fill", "none");
+        });
+    }
 };
 
 const seedPoints = (pointCount, clusterCount, width, height) => {
