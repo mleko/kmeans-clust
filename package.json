@@ -9,7 +9,9 @@
     "k-means",
     "cluster",
     "clustering",
-    "typescript"
+    "typescript",
+    "kmeans++",
+    "k-means++"
   ],
   "scripts": {
     "compile": "tsc -d",
