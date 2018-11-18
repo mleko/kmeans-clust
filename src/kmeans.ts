@@ -26,6 +26,9 @@ export function optimizeCentroids(centroids: Point[], points: Point[], onIterati
 }
 
 function clusterCentroid(cluster: Cluster): Point {
+    if(0 === cluster.points.length) {
+        return cluster.centroid;
+    }
     const centroid = cluster.points[0].concat();
     
     for(let i = 1; i < cluster.points.length; i++) {
