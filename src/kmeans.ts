@@ -1,5 +1,6 @@
 import {assembleClusters} from "./assembleClusters";
 import { arePointsEqual, Point } from "./point";
+import { Cluster } from "./types";
 
 export function optimizeCentroids(centroids: Point[], points: Point[], onIteration?: (clusters: Cluster[]) => any): Cluster[] {
     let clusters = [];
@@ -36,10 +37,4 @@ function clusterCentroid(cluster: Cluster): Point {
         centroid[d] /= cluster.points.length;
     }
     return centroid;
-}
-
-export interface Cluster {
-    centroid: Point;
-    points: Point[];
-    error: number;
 }
