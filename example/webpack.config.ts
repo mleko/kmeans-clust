@@ -28,10 +28,14 @@ const config = {
     },
     entry: {
         // Set index.tsx as application entry point.
-        bundle: "./example/index.ts"
+        bundle: path.join(__dirname, "./index.ts")
+    },
+    output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: "bundle.js"
     },
     devServer: {
-        contentBase: path.join(__dirname, "example")
+        contentBase: path.join(__dirname, "public")
     },
     plugins: [
         new webpack.DefinePlugin({

@@ -1,7 +1,6 @@
 import * as d3 from "d3";
 import {Delaunay} from "d3-delaunay";
-import {kmeans} from "../";
-import { Cluster } from "./../src/kmeans";
+import {Cluster, kmeans} from "../";
 
 const colors = ["blue", "green", "yellow", "cyan", "magenta", "brown", "grey"];
 let data: any = {};
