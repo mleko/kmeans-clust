@@ -27,4 +27,6 @@ kmeans(points, 2)
 $ npm run example
 ```
 
+Live example is available https://mleko.gitlab.io/kmeans-clust/
+
 ### [License (MIT)](LICENSE.md)
