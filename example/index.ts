@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import {Delaunay} from "d3-delaunay";
 import {kmeans} from "../";
+import { Cluster } from "./../src/kmeans";
 
 const colors = ["blue", "green", "yellow", "cyan", "magenta", "brown", "grey"];
 let data: any = {};
@@ -14,6 +15,7 @@ window.onload = () => {
 
     document.getElementById("clusterSeeds").onchange = render;
     document.getElementById("voronoi").onchange = render;
+    document.getElementById("iteration").oninput = render;
 
     loadForm();
 };
@@ -36,12 +38,23 @@ const seed = () => {
 };
 
 const clusterize = () => {
-    data.clusters = kmeans(data.points, data.clusterCount);
+    const iterations = [];
+    data.clusters = kmeans(data.points, data.clusterCount, {
+        onIteration: (c: Cluster[]) => {
+            iterations.push(c);
+        }
+    });
+    data.iterations = iterations;
+    data.iterationIdx = iterations.length - 1;
+    document.getElementById("iteration")["max"] = iterations.length - 1;
+    document.getElementById("iteration")["value"] = iterations.length - 1;
     render();
 };
 
 const render = () => {
-    const {clusters, width, height, seeds} = data;
+    const iterationIdx = parseInt(document.getElementById("iteration")["value"]);
+    const {iterations, width, height, seeds} = data;
+    const clusters = iterations[iterationIdx];
 
     document.getElementById("graph").innerHTML = null;
     const svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);

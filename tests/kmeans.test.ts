@@ -24,4 +24,15 @@ describe("kMeans", () => {
             return a.centroid[0] - b.centroid[0];
         });
     });
+
+    it("should call iteration listener", () => {
+        const points = [[0], [1], [9], [10]];
+        let iterations = 0;
+        const clusters = kmeans(points, 2, {
+            onIteration: () => {
+                iterations++;
+            }
+        });
+        assert.strictEqual(iterations > 0, true);
+    });
 });

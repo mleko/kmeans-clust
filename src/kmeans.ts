@@ -1,21 +1,26 @@
 import {assembleClusters} from "./assembleClusters";
 import { arePointsEqual, Point } from "./point";
 
-export function optimizeCentroids<L>(centroids: Point[], points: Point[]): Cluster[] {
-    let clusters = assembleClusters(centroids, points);
-    let run = true;
-    while(run) {
-        run = false;
+export function optimizeCentroids(centroids: Point[], points: Point[], onIteration?: (clusters: Cluster[]) => any): Cluster[] {
+    let clusters = [];
+    let anyCentroidChanged = false;
+
+    do {
+        clusters = assembleClusters(centroids, points);
+        if(onIteration) {
+            onIteration(clusters);
+        }
+        
+        anyCentroidChanged = false;
         centroids = [];
         for(const cluster of clusters) {
             const centroid = clusterCentroid(cluster);
             centroids.push(centroid);
             if(!arePointsEqual(centroid, cluster.centroid)) {
-                run = true;
+                anyCentroidChanged = true;
             }
         }
-        clusters = assembleClusters(centroids, points);
-    }
+    } while( anyCentroidChanged );
     return clusters;
 }
 
