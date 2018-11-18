@@ -19,8 +19,8 @@ pages:
   script:
     - mkdir public
     - npm run -q compile:examples
-    - cp examples/dist/bundle.js public/
-    - cp examples/public/index.html public/
+    - cp example/dist/bundle.js public/
+    - cp example/public/index.html public/
     - "echo -e \"DATE: $(date '+%Y-%m-%d %H:%M:%S')\\nREF: $(git rev-parse --verify HEAD)\" > public/dist.info.txt"
   artifacts:
     paths:
