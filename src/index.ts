@@ -1,21 +1,30 @@
 import { merge } from "typescript-object-utils";
-import { Cluster, optimizeCentroids } from "./kmeans";
-import { Point } from "./point";
-import { randomPick } from "./randomPick";
 
-export { Cluster };
+import { unique } from "./array";
+import { euclideanDistance } from "./euclideanDistance";
+import { kmeansPlusPlusInit as defaultInitFunction } from "./initFunction";
+import { optimizeCentroids } from "./kmeans";
+import { arePointsEqual, Point } from "./point";
+import { Cluster, KMeansOptions } from "./types";
+
+export { Cluster, KMeansOptions };
 
 export function kmeans(points: Point[], k: number, options?: Partial<KMeansOptions>): Cluster[] {
-    options = merge(defaults, options);
-    const centroids = options.initFunction(points, k);
-    return optimizeCentroids(centroids, points, options.onIteration);
+    const mergedOptions = merge(defaults, options);
+    const centroids = initCentroids(points, k, mergedOptions);
+    return optimizeCentroids(centroids, points, mergedOptions.onIteration);
 }
 
-export interface KMeansOptions {
-    initFunction: (points: Point[], k: number) => Point[];
-    onIteration?: (clusters: Cluster[]) => any;
+function initCentroids(points: Point[], k: number, options: KMeansOptions): Point[] {
+    const uniquePoints = unique(points, arePointsEqual);
+    if(uniquePoints.length < k) {
+        throw new Error("Not enough unique points");
+    }
+
+    return options.initFunction(uniquePoints, k, options.distanceFunction);
 }
 
 const defaults: KMeansOptions = {
-    initFunction: randomPick
+    distanceFunction: euclideanDistance,
+    initFunction: defaultInitFunction
 };
