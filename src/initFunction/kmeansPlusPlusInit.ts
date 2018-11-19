@@ -8,8 +8,7 @@ export const kmeansPlusPlusInit: InitFunction = (points: Point[], cnt: number, d
     for(let i = 1; i < cnt; i++) {
         const weights = points.map((p) => {
             return picks.reduce((carry, centroid) => {
-                const dist = distanceFn(p, centroid);
-                return carry < dist ? carry : dist;
+                return Math.min(carry, distanceFn(p, centroid));
             }, Infinity);
         });
         const idx = weightedPick(weights, Math.random());

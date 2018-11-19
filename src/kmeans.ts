@@ -1,15 +1,15 @@
 import {assembleClusters} from "./assembleClusters";
 import { arePointsEqual, Point } from "./point";
-import { Cluster } from "./types";
+import { Cluster, KMeansOptions } from "./types";
 
-export function optimizeCentroids(centroids: Point[], points: Point[], onIteration?: (clusters: Cluster[]) => any): Cluster[] {
+export function optimizeCentroids(centroids: Point[], points: Point[], options: KMeansOptions): Cluster[] {
     let clusters = [];
     let anyCentroidChanged = false;
 
     do {
-        clusters = assembleClusters(centroids, points);
-        if(onIteration) {
-            onIteration(clusters);
+        clusters = assembleClusters(centroids, points, options.distanceFunction);
+        if(options.onIteration) {
+            options.onIteration(clusters);
         }
         
         anyCentroidChanged = false;

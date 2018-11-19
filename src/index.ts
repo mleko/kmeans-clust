@@ -12,7 +12,7 @@ export { Cluster, KMeansOptions };
 export function kmeans(points: Point[], k: number, options?: Partial<KMeansOptions>): Cluster[] {
     const mergedOptions = merge(defaults, options);
     const centroids = initCentroids(points, k, mergedOptions);
-    return optimizeCentroids(centroids, points, mergedOptions.onIteration);
+    return optimizeCentroids(centroids, points, mergedOptions);
 }
 
 function initCentroids(points: Point[], k: number, options: KMeansOptions): Point[] {

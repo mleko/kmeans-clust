@@ -1,9 +1,8 @@
-import { euclideanDistance } from "./euclideanDistance";
 import { Point } from "./point";
 import { Cluster, DistanceFunction } from "./types";
 
-export function assembleClusters(centroids: Point[], points: Point[]): Cluster[] {
-    const map = buildDistanceMap(centroids, points, euclideanDistance);
+export function assembleClusters(centroids: Point[], points: Point[], distanceFunction: DistanceFunction): Cluster[] {
+    const map = buildDistanceMap(centroids, points, distanceFunction);
     
     const clusters: Cluster[] = [];
     for(let c = 0; c < centroids.length; c++) {

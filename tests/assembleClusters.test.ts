@@ -1,10 +1,11 @@
 import * as assert from "assert";
 
 import {assembleClusters} from "../src/assembleClusters";
+import {euclideanDistance} from "../src/euclideanDistance";
 
 describe("kmeans.assembleClusters", () => {
     it("should properly assemble clusters", () => {
-        const clusters = assembleClusters([[3.33], [9]], [[0], [1], [9], [10]]);
+        const clusters = assembleClusters([[3.33], [9]], [[0], [1], [9], [10]], euclideanDistance);
         assert.equal(2, clusters.length);
         assert.equal(2, clusters[0].points.length);
         assert.equal(2, clusters[1].points.length);
@@ -20,7 +21,7 @@ describe("kmeans.assembleClusters", () => {
     });
 
     it("should properly assemble clusters", () => {
-        const clusters = assembleClusters([[3.33]], [[0], [1], [9], [10]]);
+        const clusters = assembleClusters([[3.33]], [[0], [1], [9], [10]], euclideanDistance);
         assert.equal(1, clusters.length);
         assert.equal(4, clusters[0].points.length);
 
